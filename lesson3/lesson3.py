@@ -2,7 +2,8 @@
 Ex1
 The first input array contains the correct answers to an exam, like ["a", "a", "b", "d"]. The second one is "answers" array and contains student's answers.
 
-The two arrays are not empty and are the same length. Return the score for this array of answers, giving +4 for each correct answer, -1 for each incorrect answer, and +0 for each blank answer(empty string).
+The two arrays are not empty and are the same length. Return the score for this array of answers, giving +4 for each correct answer, -1 for each incorrect answer, and +0 for each blank answer(empty 
+string).
 
 If the score < 0, return 0.
 
@@ -14,8 +15,15 @@ checkExam(["b", "c", "b", "a"], ["",  "a", "a", "c"]) → 0
 
 
 def check_exam(arr1,arr2):
-    # Your code here
-    return
+    points = 0
+    for i in range(4):
+        if arr1[i] == arr2[i]:
+            points += 4
+        elif arr1[i] == "" or arr2[i] == "":
+            points += 0         
+        elif arr1[i] != arr2[i]:
+            points -= 1
+    return points if points >= 0 else 0
 
 
 assert check_exam(["a", "a", "b", "b"], ["a", "c", "b", "d"]) == 6
@@ -43,8 +51,8 @@ The middle character(s) of the word represented as a string.
 
 
 def get_middle(s):
-    # Your code here
-    return
+    i = (len(s) - 1) // 2
+    return s[i:-i] or s
     
     
 assert get_middle("test") == "es"
@@ -71,8 +79,10 @@ Output string must be two numbers separated by a single space, and highest numbe
 
 
 def high_and_low(numbers):
-    # Your code here
-    return
+    nums = [int(x) for x in numbers.split()]
+    high = str(max(nums))
+    low = str(min(nums))
+    return str(high + " " + low)
     
     
 assert high_and_low("4 5 29 54 4 0 -214 542 -64 1 -3 6 -6") == "542 -214"
@@ -114,8 +124,7 @@ The binary number returned should be a string
 
 
 def add_binary(a,b):
-    #your code here
-    return
+    return bin(a+b)[2:]
     
     
 assert add_binary(1,1) == "10"
@@ -148,9 +157,11 @@ Examples
 
 
 def count_consonants(text):
-    # Your code here
-    return
-    
+    cons = 0
+    for i in set(text.lower()):
+        if i not in "aeiou" and i.isalpha():
+            cons += 1
+    return cons
     
 assert count_consonants('sillystring') == 7
 assert count_consonants('aeiou') == 0
@@ -166,8 +177,13 @@ Return the resulting string.
 
 
 def fake_bin(x):
-    # Your code here
-    return
+    result = ""
+    for num in x:
+        if int(num) < 5:
+            result = result + "0"
+        else:
+            result = result + "1"
+    return result
     
     
 tests = [
@@ -200,8 +216,11 @@ arithmetic_sequence_elements(1, 2, 5) == "1, 3, 5, 7, 9"
 
 
 def arithmetic_sequence_elements(a, r, n):
-    #Your code here!:)
-    return
+    z = str(a)
+    for i in range(n - 1):
+        a = a + r
+        z = z + ", " + str(a)
+    return z
     
     
 assert arithmetic_sequence_elements(1, 2, 5) == '1, 3, 5, 7, 9'
@@ -221,9 +240,13 @@ Note: If the number is a multiple of both 3 and 5, only count it once.
 
 
 def solution(number):
-    # Your code here
-    return
-    
+    result = 0
+    for i in range(number):
+        if i % 5 == 0 or i % 3 == 0:
+            result += i
+    return result
+
+
     
 assert solution(10) == 23
 
@@ -246,10 +269,9 @@ Note: the result should be rounded down to the nearest integer.
 '''
 
 
-def predict_age(age_1, age_2, age_3, age_4, age_5, age_6, age_7, age_8):
-    # your code here
-    return
-    
+def predict_age(*age):
+    return sum(a*a for a in age)**0.5//2
+
     
 assert predict_age(65,60,75,55,60,63,64,45) == 86
 
@@ -266,10 +288,13 @@ Example
 
 
 def populate_dict(keys, default):
-    # your code here
-    return
+    d = {}
+    for i in keys:
+        d[i] = default
+    return d
     
     
 assert populate_dict(["draft", "completed"], 0) == {"completed": 0, "draft": 0}
 assert populate_dict(["a", "b", "c"], None) == {"c": None, "b": None, "a": None}
 assert populate_dict([1, 2, 3, 4], "OK") == {1: "OK", 2: "OK", 3: "OK", 4: "OK"}
+
